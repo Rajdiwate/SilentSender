@@ -6,15 +6,42 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
+import axios from "axios"
+import { toast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
+import { Toaster } from "@/components/ui/toaster"
+
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle login logic here
-    console.log("Login attempted with:", username, password)
+    try {
+        const res = await axios.post('/api/login' , {username , password} ,{
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer yourToken",
+            },
+            withCredentials: true, // Include cookies with the request
+          })
+
+        if(!res.data.success){
+            toast({
+                variant: "destructive",
+                description : res.data.message
+            })
+            return 
+        }
+        router.push('/home')
+    } catch (error : any) {
+        toast({
+            variant: "destructive",
+            description : "Invalid Credentials"
+        })
+    }
   }
 
   return (
@@ -66,6 +93,7 @@ export default function LoginPage() {
           </p>
         </CardFooter>
       </Card>
+    <Toaster/>
     </div>
   )
 }
