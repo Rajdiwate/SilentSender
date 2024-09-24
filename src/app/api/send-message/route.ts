@@ -8,8 +8,8 @@ import { messageSchema } from "@/schema/messageSchema";
 
 export async function POST(req: NextRequest) {
   try {
-    const { username, content } = await req.json();
-    const parsedData = messageSchema.safeParse({username , content})
+    const { id, content } = await req.json();
+    const parsedData = messageSchema.safeParse({id , content})
     if(!parsedData.success){
         // If validation fails, return the error messages
         return NextResponse.json(
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     const user = await db
       .select()
       .from(userTable)
-      .where(eq(userTable.username, username))
+      .where(eq(userTable.id, id))
       .limit(1);
     if (user.length <= 0) {
       return NextResponse.json(
