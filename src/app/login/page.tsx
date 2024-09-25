@@ -23,7 +23,6 @@ export default function LoginPage() {
         const res = await axios.post('/api/login' , {username , password} ,{
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer yourToken",
             },
             withCredentials: true, // Include cookies with the request
           })

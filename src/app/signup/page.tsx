@@ -37,7 +37,6 @@ export default function SignupPage() {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer yourToken",
           },
           withCredentials: true, // Include cookies with the request
         }

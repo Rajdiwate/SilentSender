@@ -16,7 +16,9 @@ export async function GET(req: NextRequest) {
     
     const messages = await db
       .select({
+        id : messageTable.id,
         content: messageTable.content,
+        createdAt : messageTable.createdAt
       } )
       .from(messageTable)
       .where(eq(messageTable.userId, user.id))

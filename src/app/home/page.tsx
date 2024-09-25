@@ -1,27 +1,19 @@
+'use server'
+import { validateRequest } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import React from "react";
+import Dashboard from "../components/Dashboard";
+import axios from "axios";
 
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { validateRequest } from "@/lib/auth"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import DisplayMessage from "../components/DisplayMessage"
-
-
-export default async  function Home() {
-
-  const {user} : any = await validateRequest()
-
-  if(!user){
-    return redirect("/login")
-  }
-  const link = `http://localhost:3000/u/${user.id}`
+export default async function () {
+  // const { user } = await validateRequest();
+  // if (!user) {
+  //   return redirect("/");
+  // }
 
   return (
-    <div className="h-screen w-screen bg-gray-900 text-white"> 
-     {link}
-
-    <DisplayMessage/>
-
+    <div>
+      <Dashboard/>
     </div>
-  )
+  );
 }
